@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance & Progression Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<body>
+    <header>
+        <h1>Balance & Progression Studio</h1>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="import">Импорт</button>
+        <button class="tab-btn" data-tab="table">Таблица</button>
+        <button class="tab-btn" data-tab="ttk">Калькулятор урона</button>
+        <button class="tab-btn" data-tab="progression">Прогрессия</button>
+        <button class="tab-btn" data-tab="loot">Лут</button>
+    </nav>
+
+    <main>
+        <!-- Вкладка 1: Импорт -->
+        <section id="import" class="tab-content active">
+            <h2>Загрузка данных</h2>
+            <p>Загрузите CSV или JSON файл со статами юнитов.</p>
+            <input type="file" id="fileInput" accept=".csv, .json">
+            <div id="importStatus"></div>
+        </section>
+
+                <!-- Вкладка 2: Таблица -->
+        <section id="table" class="tab-content">
+            <h2>Редактор юнитов</h2>
+            <div style="margin-bottom: 15px;">
+                <button id="addRowBtn" style="padding: 8px 15px; cursor: pointer;">+ Добавить юнита</button>
+                <button id="saveDataBtn" style="padding: 8px 15px; cursor: pointer; background-color: #1abc9c; color: white; border: none;">Сохранить в браузере</button>
+                <span id="saveStatus" style="margin-left: 15px; color: green; font-weight: bold;"></span>
+            </div>
+            <div id="tableContainer">Здесь будет таблица...</div>
+        </section>
+
+                <!-- Вкладка 3: TTK -->
+        <section id="ttk" class="tab-content">
+            <h2>Калькулятор урона (TTK)</h2>
+            <div style="margin-bottom: 15px; display: flex; gap: 20px; align-items: center;">
+                <label>Атакующий: <select id="attackerSelect"></select></label>
+                <label>Цель: <select id="targetSelect"></select></label>
+                <button id="calcTtkBtn" style="padding: 8px 15px; cursor: pointer;">Рассчитать TTK</button>
+            </div>
+            <div id="ttkResult" style="font-size: 18px; font-weight: bold; color: #2c3e50;"></div>
+        </section>
+
+                <!-- Вкладка 4: Прогрессия -->
+        <section id="progression" class="tab-content">
+            <h2>Кривая прогрессии</h2>
+            <div style="margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; background: #eef; padding: 10px; border-radius: 5px;">
+                <label>Базовый опыт (на 1 ур): <input type="number" id="baseExpInput" value="100" style="width: 80px; padding: 5px;"></label>
+                <label>Множитель (сложность): <input type="number" id="multiplierInput" value="1.5" step="0.1" style="width: 80px; padding: 5px;"></label>
+                <label>Макс. уровень: <input type="number" id="maxLevelInput" value="10" style="width: 80px; padding: 5px;"></label>
+                <button id="calcProgBtn" style="padding: 8px 15px; cursor: pointer; background-color: #1abc9c; color: white; border: none; border-radius: 4px;">Построить график</button>
+            </div>
+            
+            <div style="display: flex; gap: 20px;">
+                <div style="flex: 1; max-height: 400px; overflow-y: auto;">
+                    <table id="progTable"></table>
+                </div>
+                <div style="flex: 2; position: relative; height: 400px;">
+                    <canvas id="progChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+                <!-- Вкладка 5: Лут -->
+        <section id="loot" class="tab-content">
+            <h2>Проверка таблицы лута</h2>
+            <p>Введите предметы и шанс их выпадения. Сумма шансов должна быть ровно 100%.</p>
+            
+            <div style="margin-bottom: 15px;">
+                <button id="addLootBtn" style="padding: 8px 15px; cursor: pointer;">+ Добавить предмет</button>
+                <button id="checkLootBtn" style="padding: 8px 15px; cursor: pointer; background-color: #e67e22; color: white; border: none; border-radius: 4px;">Проверить сумму</button>
+                <button id="exportLootBtn" style="padding: 8px 15px; cursor: pointer; background-color: #2ecc71; color: white; border: none; border-radius: 4px;">Экспорт JSON</button>
+            </div>
+
+            <div id="lootStatus" style="margin-bottom: 15px; font-weight: bold; font-size: 18px;"></div>
+
+            <table id="lootTable">
+                <thead>
+                    <tr>
+                        <th>Название предмета</th>
+                        <th>Шанс выпадения (%)</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody id="lootTableBody">
+                    <!-- Строки будут добавляться через JS -->
+                </tbody>
+            </table>
+        </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
